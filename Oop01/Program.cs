@@ -102,22 +102,6 @@ namespace Oop04
 
             #endregion
 
-            #region Update Weight - Overloading
-
-            Console.WriteLine("\n----------------------------------------");
-            Console.WriteLine("Updating Weight");
-            Console.WriteLine("----------------------------------------");
-
-            Console.WriteLine($"Original Weight: {standardShipment.Weight} KG");
-
-            standardShipment.UpdateWeight(5);
-            Console.WriteLine($"Updated Weight: {standardShipment.Weight} KG");
-
-            standardShipment.UpdateWeight(5, 0.5m);
-            Console.WriteLine($"Updated Weight After Packing: {standardShipment.Weight} KG");
-
-            #endregion
-
             #region Generate Customs Report
 
             Console.WriteLine("\n----------------------------------------");
@@ -197,12 +181,12 @@ namespace Oop04
 
             foreach (ITrackable shipment in trackableShipments)
             {
-                shipment.GetTrackingStatus();
+                Console.WriteLine(shipment.GetTrackingStatus());
             }
 
             foreach (IInsurable shipment in insurableShipments)
             {
-                shipment.CalculateInsurance();
+                Console.WriteLine($"Insurance Cost: {shipment.CalculateInsurance():0.00} EGP");
             }
 
             Console.WriteLine("\n----------------------------------------");
@@ -210,6 +194,20 @@ namespace Oop04
             Console.WriteLine("----------------------------------------");
             Console.WriteLine("Interface Polymorphism Demonstrated Successfully");
 
+            #endregion
+
+            #region Update Weight - Overloading
+            Console.WriteLine("\n----------------------------------------");
+            Console.WriteLine("Updating Weight");
+            Console.WriteLine("----------------------------------------");
+
+            Console.WriteLine($"Original Weight: {standardShipment.Weight} KG");
+
+            standardShipment.UpdateWeight(5);
+            Console.WriteLine($"Updated Weight: {standardShipment.Weight} KG");
+
+            standardShipment.UpdateWeight(5, 0.5m);
+            Console.WriteLine($"Updated Weight After Packing: {standardShipment.Weight} KG");
             #endregion
 
             #region Remove Shipment
@@ -230,7 +228,6 @@ namespace Oop04
             Console.WriteLine("\n========================================");
             Console.WriteLine("                 END");
             Console.WriteLine("========================================");
-
         }
     }
 }

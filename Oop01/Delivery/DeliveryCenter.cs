@@ -94,18 +94,19 @@ internal class DeliveryCenter
     }
     #endregion
 
-    #region Interface Polymorphism 
-    // Prints the tracking status through the ITrackable interface>
+    #region Interface Polymorphism
+    // Prints the tracking status of any trackable shipment
     public void PrintShipment(ITrackable shipment)
     {
         Console.WriteLine(shipment.GetTrackingStatus());
     }
-    // Prints the insurance cost through the IInsurable interface.
+    // Prints the insurance cost of any insurable shipment
     public void PrintInsurance(IInsurable shipment)
     {
-        Console.WriteLine($"Insurance Cost for Shipment {shipment.CalculateInsurance():C}");
+        Console.WriteLine($"Insurance Cost: {shipment.CalculateInsurance():0.00} EGP");
     }
-    // Prints the tracking statuses of all trackable shipments in the center>
+
+    // Prints tracking statuses for all trackable shipments
     public void PrintTrackingStatuses()
     {
         foreach (Shipment shipment in shipments)
@@ -117,5 +118,4 @@ internal class DeliveryCenter
         }
     }
     #endregion
-
 }

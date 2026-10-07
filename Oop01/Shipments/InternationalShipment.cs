@@ -1,5 +1,6 @@
-﻿using Oop04.Delivery;
-using Oop04.Interfaces;
+﻿using Oop04.Interfaces;
+using Oop04.Delivery;
+
 namespace Oop04.Shipments;
 
 internal class InternationalShipment : Shipment, ITrackable, IInsurable
@@ -7,19 +8,28 @@ internal class InternationalShipment : Shipment, ITrackable, IInsurable
     #region Fields
     private string destinationCountry;
     private decimal customsFee;
-
     #endregion
 
     #region Constructor
-    public InternationalShipment(string description, decimal weight, decimal deliveryFee, string trackingCode, DeliveryAddress destination, string destinationCountry, decimal customsFee)
+
+    public InternationalShipment(
+        string description,
+        decimal weight,
+        decimal deliveryFee,
+        string trackingCode,
+        DeliveryAddress destination,
+        string destinationCountry,
+        decimal customsFee)
         : base(description, weight, deliveryFee, trackingCode, destination)
     {
         DestinationCountry = destinationCountry;
         CustomsFee = customsFee;
     }
+
     #endregion
 
     #region Properties
+
     public string DestinationCountry
     {
         get
@@ -28,17 +38,25 @@ internal class InternationalShipment : Shipment, ITrackable, IInsurable
         }
         set
         {
-            destinationCountry = string.IsNullOrWhiteSpace(value) ? destinationCountry : value;
+            destinationCountry =
+                string.IsNullOrWhiteSpace(value)
+                ? destinationCountry
+                : value;
         }
     }
+
     public decimal CustomsFee
     {
-        get{ return customsFee;}
+        get
+        {
+            return customsFee;
+        }
         set
         {
             customsFee = value >= 0 ? value : customsFee;
         }
     }
+
     public override decimal EstimatedCost
     {
         get
@@ -50,9 +68,11 @@ internal class InternationalShipment : Shipment, ITrackable, IInsurable
     #endregion
 
     #region Methods
+
     public override void PrintShipment()
     {
-        Console.WriteLine($"International Shipment - Tracking Code: {TrackingCode}, " +
+        Console.WriteLine(
+            $"International Shipment - Tracking Code: {TrackingCode}, " +
             $"Description: {Description}, " +
             $"Weight: {Weight} kg, " +
             $"Delivery Fee: {DeliveryFee:C}, " +
@@ -63,7 +83,7 @@ internal class InternationalShipment : Shipment, ITrackable, IInsurable
     }
     public string GetTrackingStatus()
     {
-        return $"Shipment {TrackingCode} is Deliverd";
+        return $"Shipment {TrackingCode} has been Delivered.";
     }
     public decimal CalculateInsurance()
     {
@@ -72,8 +92,9 @@ internal class InternationalShipment : Shipment, ITrackable, IInsurable
     public virtual string GenerateCustomsReport()
     {
         return $"Customs Report for Shipment {TrackingCode}: " +
-            $"Destination Country: {DestinationCountry}, " +
-            $"Customs Fee: {CustomsFee:C}";
+               $"Destination Country: {DestinationCountry}, " +
+               $"Customs Fee: {CustomsFee:C}";
     }
+
     #endregion
 }
