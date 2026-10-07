@@ -1,16 +1,18 @@
-﻿namespace Oop01;
+﻿using Oop04.Delivery;
 
-public struct Shipment
+namespace Oop04;
+
+public abstract class Shipment
 {
     #region Fields
     private string description; 
-    private double weight;
+    private decimal weight;
     private decimal deliveryFee;
     private string trackingCode;
     #endregion
 
     #region Constructor
-    public Shipment(string trackingCode)
+    protected Shipment(string trackingCode)
     {
         Description = "Unknown";
         Weight = 1;
@@ -19,7 +21,7 @@ public struct Shipment
         Destination = new DeliveryAddress("Unknown", "Unknown",0);
     }
 
-    public Shipment(string description, double weight, decimal deliveryFee, string trackingCode, DeliveryAddress destination) 
+    protected Shipment(string description, decimal weight, decimal deliveryFee, string trackingCode, DeliveryAddress destination) 
     {
         Description = description;
         Weight = weight;
@@ -31,25 +33,18 @@ public struct Shipment
 
     #region Properties
     public DeliveryAddress Destination { get; set; }
-    #region Q2
     public string Description
     {
-        get
-        {
-            return description;
-        }
+        get { return description;}
         set
         {
             description = string.IsNullOrWhiteSpace(value) ? description : value; 
         }
 
     }
-    public double Weight 
+    public decimal Weight 
     {
-        get
-        {
-            return weight;
-        }
+        get{ return weight;}
         set 
         {
             weight = value > 0 ? value : weight;
@@ -57,40 +52,45 @@ public struct Shipment
     }
     public decimal DeliveryFee
     {
-        get
-        {
-            return deliveryFee;
-        }
+        get{ return deliveryFee; }
         private set
         {
             deliveryFee = value > 0 ? value : deliveryFee  ;
         }
     }
-    #endregion
     public string TrackingCode
     {
-        get
-        {
-            return trackingCode;
-        }
+        get{ return trackingCode; }
         private set
         {
             trackingCode = string.IsNullOrWhiteSpace(value) ? trackingCode : value;
         }
     }
-    public decimal EstimatedCost
-    {
-        get
-        {
-            return DeliveryFee + ((decimal)Weight * 5m);
-        }
-    } // EstimatedCost has only a getter because it is a calculated property.
+    public abstract decimal EstimatedCost { get; }
+    // Abstract cuz every derived shipment calculates its own cost
     #endregion
 
+    #region Methods
     public void UpdateDeliveryFee(decimal newFee)
     {
+        // Update only if the new fee is valid
         DeliveryFee = newFee > 0 ? newFee : DeliveryFee;
     }
 
+    // Method Overloading - updates weight directly
+    public void UpdateWeight(decimal newWeight)
+    {
+        Weight = newWeight > 0 ? newWeight : Weight;
+    }
+    // Method Overloading - updates weight after adding packing weight
+    public void UpdateWeight(decimal newWeight, decimal extraPackingWeight)
+    {
+        if (newWeight > 0 && extraPackingWeight >= 0)
+        {
+            Weight = newWeight + extraPackingWeight;
+        }
+    }
+    public abstract void PrintShipment();
 
+    #endregion
 }

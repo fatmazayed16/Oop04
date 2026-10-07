@@ -1,122 +1,235 @@
-﻿namespace Oop01
+﻿using Oop04.Delivery;
+using Oop04.Interfaces;
+using Oop04.Shipments;
+
+namespace Oop04
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            #region Q1
-            /*
-             A: What happens when a DeliveryAddress variable is copied into another variable
-            and the copy is modified?
-            Code:
-            public struct DeliveryAddress
-            {
-                 public string City;
-                 public string Street;
-            }
+            Console.WriteLine("========================================");
+            Console.WriteLine("          DELIVERY SYSTEM");
+            Console.WriteLine("========================================");
 
-            Answer:
+            #region Create Delivery Center & Driver
 
-            DeliveryAddress is a struct, which is a value type.
-            When a DeliveryAddress variable is copied, a separate copy of the value is created.
-            If the copy is modified, the original variable is not 
-           */
+            DeliveryCenter center = new DeliveryCenter("Cairo Delivery Center");
 
-            /*
-            B: What happens when a Customer variable is copied into another variable
-            and one variable modifies the object?
-            Code:
-            public class Customer
-            {
-                public string Name;
-            }
+            Driver driver = new Driver("Moustafa Ahmed");
+            center.Driver = driver;
 
-            Answer:
+            Console.WriteLine("\nDelivery Center");
+            Console.WriteLine($"Driver: {center.Driver.Name}");
 
-            Customer is a class, which is a reference type.
-            When a Customer variable is copied, both variables reference the same object.
-            If one variable modifies the object, the change is visible through the other variable.
-            */
             #endregion
 
-            #region Q2
-            /* (A) 4 Problems :
-                * Anyone can modify the data in the struct 
-                * No validation in Weight and DeliveryFee
-                * fialds ar public 
-                * if we change the name of any field in struct,If we change the name of any field in the struct, 
-                   we also have to change every place that uses that field in the Main class.
-                   This makes the code less maintainable and tightly coupled.
-            (B) The fields are changed from public to private to improve encapsulation.
-                Public properties are used to control access to the private fields.
-                Validation is added to prevent negative values for Weight and DeliveryFee (If a negative value is entered, it is set to 0)
-            */
+            #region Create Shipments
+
+            StandardShipment standardShipment = new StandardShipment(
+                "Laptop",
+                3,
+                80,
+                "SH001",
+                new DeliveryAddress("Cairo", "Main Street", 10));
+
+            ExpressShipment expressShipment = new ExpressShipment(
+                "Mobile",
+                2,
+                60,
+                "SH002",
+                new DeliveryAddress("Cairo", "Nile Street", 20),
+                30);
+
+            InternationalShipment internationalShipment = new InternationalShipment(
+                "Television",
+                8,
+                120,
+                "SH003",
+                new DeliveryAddress("Cairo", "Airport Street", 30),
+                "Germany",
+                100);
+
             #endregion
 
-            #region Q3
-            DeliveryAddress deliveryAddress01 = new DeliveryAddress("Giza", "Zwil", 3);
-            DeliveryAddress deliveryAddress02 = deliveryAddress01;
+            #region Add Shipments
 
-            deliveryAddress02.city = "Cairo";
-            Console.WriteLine(deliveryAddress01.city);
-            Console.WriteLine(deliveryAddress02.city);
+            center.AddShipment(standardShipment);
+            center.AddShipment(expressShipment);
+            center.AddShipment(internationalShipment);
+
             #endregion
 
-            #region last
-            DeliveryCenter center = new DeliveryCenter();
+            #region Shipment Details
 
-            for (int i = 0; i < 3; i++)
-            {
-                center.AddShipment(ReadShipment());
-            }
+            Console.WriteLine("\n----------------------------------------");
+            Console.WriteLine("Shipment Details");
+            Console.WriteLine("----------------------------------------");
+
+            center.PrintAllShipments();
+
             #endregion
-        }
-        static Shipment ReadShipment()
-        {
-            Console.Write("Tracking Code: ");
-            string trackingCode = Console.ReadLine()!;
 
-            Console.Write("Description: ");
-            string description = Console.ReadLine()!;
+            #region Delivery Helper
 
-            Console.Write("Weight: ");
-            double weight;
-            while (!double.TryParse(Console.ReadLine(), out weight) || weight <= 0)
+            Console.WriteLine("\n----------------------------------------");
+            Console.WriteLine("Delivery Helper");
+            Console.WriteLine("----------------------------------------");
+
+            DeliveryHelper.PrintShipmentDetails(standardShipment);
+            DeliveryHelper.PrintShipmentDetails(expressShipment);
+            DeliveryHelper.PrintShipmentDetails(internationalShipment);
+
+            #endregion
+
+            #region Shipment Array
+
+            Console.WriteLine("\n----------------------------------------");
+            Console.WriteLine("Shipment Array");
+            Console.WriteLine("----------------------------------------");
+
+            Shipment[] shipments =
             {
-                Console.Write("Invalid weight. Please enter a number greater than 0: ");
+                standardShipment,
+                expressShipment,
+                internationalShipment
+            };
+
+            foreach (Shipment shipment in shipments)
+            {
+                shipment.PrintShipment();
             }
 
-            Console.Write("Delivery Fee: ");
-            decimal deliveryFee;
-            while (!decimal.TryParse(Console.ReadLine(), out deliveryFee) || deliveryFee <= 0)
+            #endregion
+
+            #region Update Weight - Overloading
+
+            Console.WriteLine("\n----------------------------------------");
+            Console.WriteLine("Updating Weight");
+            Console.WriteLine("----------------------------------------");
+
+            Console.WriteLine($"Original Weight: {standardShipment.Weight} KG");
+
+            standardShipment.UpdateWeight(5);
+            Console.WriteLine($"Updated Weight: {standardShipment.Weight} KG");
+
+            standardShipment.UpdateWeight(5, 0.5m);
+            Console.WriteLine($"Updated Weight After Packing: {standardShipment.Weight} KG");
+
+            #endregion
+
+            #region Generate Customs Report
+
+            Console.WriteLine("\n----------------------------------------");
+            Console.WriteLine("Customs Report");
+            Console.WriteLine("----------------------------------------");
+
+            PriorityInternationalShipment priorityShipment =
+                new PriorityInternationalShipment(
+                    "Television",
+                    8,
+                    120,
+                    "SH004",
+                    new DeliveryAddress("Cairo", "Airport Street", 30),
+                    "Germany",
+                    100);
+
+            Console.WriteLine(priorityShipment.GenerateCustomsReport());
+
+            #endregion
+
+            #region Sealed Class
+
+            CompletedShipment completedShipment =
+                new CompletedShipment(
+                    "Documents",
+                    1,
+                    50,
+                    "SH005",
+                    new DeliveryAddress("Cairo", "Tahrir Street", 15));
+
+            #endregion
+
+            #region Tracking Status
+
+            Console.WriteLine("\n----------------------------------------");
+            Console.WriteLine("Tracking Status");
+            Console.WriteLine("----------------------------------------");
+
+            center.PrintTrackingStatuses();
+
+            #endregion
+
+            #region Insurance
+
+            Console.WriteLine("\n----------------------------------------");
+            Console.WriteLine("Insurance");
+            Console.WriteLine("----------------------------------------");
+
+            DeliveryReport report = new DeliveryReport();
+
+            Console.WriteLine(
+                $"Standard Shipment Insurance: {standardShipment.CalculateInsurance():0.00} EGP");
+
+            Console.WriteLine(
+                $"Express Shipment Insurance: {expressShipment.CalculateInsurance():0.00} EGP");
+
+            Console.WriteLine(
+                $"International Shipment Insurance: {internationalShipment.CalculateInsurance():0.00} EGP");
+
+            #endregion
+
+            #region Interface Polymorphism
+
+            ITrackable[] trackableShipments =
             {
-                Console.Write("Invalid delivery fee. Please enter a number greater than 0: ");
+                standardShipment,
+                expressShipment,
+                internationalShipment
+            };
+
+            IInsurable[] insurableShipments =
+            {
+                standardShipment,
+                expressShipment,
+                internationalShipment
+            };
+
+            foreach (ITrackable shipment in trackableShipments)
+            {
+                shipment.GetTrackingStatus();
             }
 
-            Console.Write("City: ");
-            string city = Console.ReadLine()!;
-
-            Console.Write("Street: ");
-            string street = Console.ReadLine()!;
-
-            Console.Write("Building Number: ");
-            int buildingNumber;
-            while (!int.TryParse(Console.ReadLine(), out buildingNumber) || buildingNumber <= 0)
+            foreach (IInsurable shipment in insurableShipments)
             {
-                Console.Write("Invalid building number. Please enter a valid number: ");
+                shipment.CalculateInsurance();
             }
 
-            DeliveryAddress address =
-                new DeliveryAddress(city, street, buildingNumber);
+            Console.WriteLine("\n----------------------------------------");
+            Console.WriteLine("Interface Polymorphism");
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine("Interface Polymorphism Demonstrated Successfully");
 
-            return new Shipment(
-                description,
-                weight,
-                deliveryFee,
-                trackingCode,
-                address);
+            #endregion
+
+            #region Remove Shipment
+
+            Console.WriteLine("\n----------------------------------------");
+            Console.WriteLine("Remove Shipment");
+            Console.WriteLine("----------------------------------------");
+
+            bool removed = center.RemoveShipment("SH002");
+
+            Console.WriteLine(
+                removed
+                ? "Shipment SH002 Removed Successfully."
+                : "Shipment SH002 Not Found.");
+
+            #endregion
+
+            Console.WriteLine("\n========================================");
+            Console.WriteLine("                 END");
+            Console.WriteLine("========================================");
         }
     }
 }
-    
- 
