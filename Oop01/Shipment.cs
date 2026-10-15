@@ -108,6 +108,13 @@ public abstract class Shipment
 
     #endregion
 
+    #region Static Method
+    public static int GetTotalShipmentsCreated()
+    {
+        return TotalShipmentsCreated;
+    }
+    #endregion
+
     #region Methods' assignments 05
     public Shipment CopyShipment()
     {

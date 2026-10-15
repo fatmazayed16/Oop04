@@ -295,6 +295,12 @@ namespace Oop04
 
             #endregion
 
+            #region Static Method
+            Console.WriteLine($"Total Shipments Created : {Shipment.GetTotalShipmentsCreated()}");
+            Shipment shipment6 = new StandardShipment("SH006", 15m, 70m, "TRACK003", new DeliveryAddress("City4", "Street4", 4));
+            Console.WriteLine($"Total Shipments Created : {Shipment.GetTotalShipmentsCreated()}");
+            #endregion
+
             #endregion
         }
     }
