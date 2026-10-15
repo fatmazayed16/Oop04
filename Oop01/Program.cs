@@ -9,9 +9,7 @@ namespace Oop04
         static void Main(string[] args)
         {
             #region task 2 & 3 & 4 
-            Console.WriteLine("========================================");
-            Console.WriteLine("          DELIVERY SYSTEM");
-            Console.WriteLine("========================================");
+            DeliveryUtilities.PrintSystemTitle();
 
             #region Create Delivery Center & Driver
 
@@ -63,9 +61,9 @@ namespace Oop04
 
             #region Shipment Details
 
-            Console.WriteLine("\n----------------------------------------");
+            DeliveryUtilities.PrintSeparator();
             Console.WriteLine("Shipment Details");
-            Console.WriteLine("----------------------------------------");
+            DeliveryUtilities.PrintSeparator(); ;
 
             center.PrintAllShipments();
 
@@ -300,6 +298,7 @@ namespace Oop04
             Shipment shipment6 = new StandardShipment("SH006", 15m, 70m, "TRACK003", new DeliveryAddress("City4", "Street4", 4));
             Console.WriteLine($"Total Shipments Created : {Shipment.GetTotalShipmentsCreated()}");
             #endregion
+
 
             #endregion
         }
