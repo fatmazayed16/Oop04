@@ -93,4 +93,24 @@ public abstract class Shipment
     public abstract void PrintShipment();
 
     #endregion
+
+    #region Methods' assignments 05
+    public Shipment CopyShipment()
+    {
+        return (Shipment)this.MemberwiseClone();
+    }
+    public Shipment ShallowCopy()
+    {
+        return (Shipment)this.MemberwiseClone();
+    }
+
+    public Shipment DeepCopy()
+    {
+        Shipment deepCopy = (Shipment)this.MemberwiseClone();
+        deepCopy.Destination = new DeliveryAddress(Destination.City, Destination.Street, Destination.BuildingNumber);
+        return deepCopy;
+    }
+
+    #endregion
+
 }
