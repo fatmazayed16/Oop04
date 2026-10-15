@@ -132,6 +132,13 @@ public abstract partial class Shipment
         return deepCopy;
     }
 
+    #region partial Method Implementation
+    partial void OnTrackingStatusChanged(string newStatus)
+    {
+        Console.WriteLine($"Tracking status changed to: {newStatus}.");
+    }
+    #endregion
+
     #endregion
 
 }

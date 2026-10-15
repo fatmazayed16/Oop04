@@ -233,7 +233,9 @@ namespace Oop04
             #region task 5
 
             #region Object Copy
-
+            DeliveryUtilities.PrintSeparator();
+            Console.WriteLine("Object Copy");
+            DeliveryUtilities.PrintSeparator();
             Shipment shipment1 = new StandardShipment("SH001", 10m, 50m, "TRACK001", new DeliveryAddress("City1", "Street1", 1));
             Shipment shipment2 = shipment1;
             Shipment shipment3 = shipment1.CopyShipment();
@@ -330,7 +332,14 @@ namespace Oop04
             Console.WriteLine(ShipmentExtensions.IsDelivered(standard));
             #endregion
 
-
+            #region Partial Method
+            DeliveryUtilities.PrintSeparator();
+            standard.UpdateTrackingStatus("Out For Delivery");
+            DeliveryUtilities.PrintSeparator();
+            #endregion
+            DeliveryUtilities.PrintSeparator();
+            Console.WriteLine("Assignment Completed");
+            DeliveryUtilities.PrintSeparator();
             #endregion
         }
     }
