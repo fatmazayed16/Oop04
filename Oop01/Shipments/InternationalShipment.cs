@@ -81,7 +81,7 @@ internal class InternationalShipment : Shipment, ITrackable, IInsurable
             $"Destination: {Destination.GetFullAddress()}, " +
             $"Destination Country: {DestinationCountry}");
     }
-    public string GetTrackingStatus()
+    public override string GetTrackingStatus()
     {
         return $"Shipment {TrackingCode} has been Delivered.";
     }

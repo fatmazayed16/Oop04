@@ -2,7 +2,7 @@
 
 namespace Oop04;
 
-public abstract class Shipment
+public abstract partial class Shipment
 {
     #region Fields
     private string description; 

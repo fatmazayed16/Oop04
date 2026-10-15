@@ -65,7 +65,7 @@ internal class ExpressShipment : Shipment, ITrackable, IInsurable
             $"Destination: {Destination.GetFullAddress()}");
     }
 
-    public string GetTrackingStatus()
+    public override string GetTrackingStatus()
     {
         return $"Shipment {TrackingCode} is Out for Delivery.";
     }

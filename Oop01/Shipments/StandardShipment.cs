@@ -44,10 +44,12 @@ internal class StandardShipment : Shipment, ITrackable, IInsurable
             $"Destination: {Destination.GetFullAddress()}");
     }
 
-    public string GetTrackingStatus()
-    {
-        return $"Shipment {TrackingCode} is Ready.";
-    }
+    //public string GetTrackingStatus()
+    //{
+    //    return $"Shipment {TrackingCode} is Ready.";
+    //}
+
+    public override string GetTrackingStatus() => base.GetTrackingStatus();
 
     public decimal CalculateInsurance()
     {

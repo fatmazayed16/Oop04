@@ -299,6 +299,15 @@ namespace Oop04
             Console.WriteLine($"Total Shipments Created : {Shipment.GetTotalShipmentsCreated()}");
             #endregion
 
+            #region partial class
+            Console.WriteLine("---------------------------------");
+            Console.WriteLine("--------Tracking Status--------");
+            Console.WriteLine("----------------------------------");
+            Console.WriteLine(originalShipment.GetTrackingStatus());
+            originalShipment.UpdateTrackingStatus("In Transit");
+            Console.WriteLine(originalShipment.GetTrackingStatus());
+            #endregion
+
 
             #endregion
         }
