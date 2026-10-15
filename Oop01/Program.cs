@@ -1,6 +1,7 @@
 ﻿using Oop04.Delivery;
 using Oop04.Interfaces;
 using Oop04.Shipments;
+using Oop04.Extensions;
 
 namespace Oop04
 {
@@ -13,9 +14,9 @@ namespace Oop04
 
             #region Create Delivery Center & Driver
 
-            DeliveryCenter center = new DeliveryCenter("Cairo Delivery Center");
+            DeliveryCenter center = new ("Cairo Delivery Center");
 
-            Driver driver = new Driver("Moustafa Ahmed");
+            Driver driver = new ("Moustafa Ahmed");
             center.Driver = driver;
 
             Console.WriteLine("\nDelivery Center");
@@ -25,14 +26,14 @@ namespace Oop04
 
             #region Create Shipments
 
-            StandardShipment standardShipment = new StandardShipment(
+            StandardShipment standardShipment = new (
                 "Laptop",
                 3,
                 80,
                 "SH001",
                 new DeliveryAddress("Cairo", "Main Street", 10));
 
-            ExpressShipment expressShipment = new ExpressShipment(
+            ExpressShipment expressShipment = new (
                 "Mobile",
                 2,
                 60,
@@ -40,7 +41,7 @@ namespace Oop04
                 new DeliveryAddress("Cairo", "Nile Street", 20),
                 30);
 
-            InternationalShipment internationalShipment = new InternationalShipment(
+            InternationalShipment internationalShipment = new(
                 "Television",
                 8,
                 120,
@@ -88,11 +89,11 @@ namespace Oop04
             Console.WriteLine("----------------------------------------");
 
             Shipment[] shipments =
-            {
+            [
                 standardShipment,
                 expressShipment,
                 internationalShipment
-            };
+            ];
 
             foreach (Shipment shipment in shipments)
             {
@@ -108,7 +109,7 @@ namespace Oop04
             Console.WriteLine("----------------------------------------");
 
             PriorityInternationalShipment priorityShipment =
-                new PriorityInternationalShipment(
+                new (
                     "Television",
                     8,
                     120,
@@ -124,7 +125,7 @@ namespace Oop04
             #region Sealed Class
 
             CompletedShipment completedShipment =
-                new CompletedShipment(
+                new (
                     "Documents",
                     1,
                     50,
@@ -149,7 +150,7 @@ namespace Oop04
             Console.WriteLine("Insurance");
             Console.WriteLine("----------------------------------------");
 
-            DeliveryReport report = new DeliveryReport();
+            DeliveryReport report = new();
 
             Console.WriteLine(
                 $"Standard Shipment Insurance: {standardShipment.CalculateInsurance():0.00} EGP");
@@ -306,6 +307,27 @@ namespace Oop04
             Console.WriteLine(originalShipment.GetTrackingStatus());
             originalShipment.UpdateTrackingStatus("In Transit");
             Console.WriteLine(originalShipment.GetTrackingStatus());
+            #endregion
+
+            #region Extension Methods
+            DeliveryUtilities.PrintSeparator();
+            Console.WriteLine("Extension Methods");
+            DeliveryUtilities.PrintSeparator();
+
+            Shipment standard = new StandardShipment("SH007", 3m, 30m, "TRACK004", new DeliveryAddress("City5", "Street5", 5));
+            standard.UpdateTrackingStatus("In Transit");
+            Console.WriteLine(standard.GetSummary());
+
+            Shipment express = new ExpressShipment("SH008", 2m, 60m, "TRACK005", new DeliveryAddress("City6", "Street6", 6),50);
+            express.UpdateTrackingStatus("Out For Delivery");
+            Console.WriteLine(express.GetSummary());
+
+            Shipment international = new InternationalShipment("SH009", 8m, 90m, "TRACK006", new DeliveryAddress("City7", "Street7", 7), "USA", 100);
+            international.UpdateTrackingStatus("Delivered");
+            Console.WriteLine(international.GetSummary());
+            //Check if the shipments are delivered using the extension method.
+            Console.WriteLine(ShipmentExtensions.IsDelivered(international));
+            Console.WriteLine(ShipmentExtensions.IsDelivered(standard));
             #endregion
 
 
