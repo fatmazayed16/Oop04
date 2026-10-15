@@ -37,6 +37,14 @@ public abstract class Shipment
     }
     #endregion
 
+    #region Static Constructor
+    static Shipment()
+    {
+        TotalShipmentsCreated = 0;
+        Console.WriteLine("Shipment System Initialized");
+    }
+    #endregion
+
     #region Properties
     public DeliveryAddress Destination { get; set; }
     public string Description
