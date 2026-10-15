@@ -11,8 +11,12 @@ public abstract class Shipment
     private string trackingCode;
     #endregion
 
+    #region Static Fields
+    public static int TotalShipmentsCreated { get; private set; } = 0;
+    #endregion
+
     #region Constructor
-    protected Shipment(string trackingCode)
+    protected Shipment(string trackingCode) : this("Unknown", 1, 50, trackingCode, new DeliveryAddress("Unknown", "Unknown", 0))
     {
         Description = "Unknown";
         Weight = 1;
@@ -28,6 +32,8 @@ public abstract class Shipment
         DeliveryFee = deliveryFee;
         TrackingCode = trackingCode;
         Destination = destination;
+
+        TotalShipmentsCreated++;
     }
     #endregion
 

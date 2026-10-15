@@ -287,6 +287,14 @@ namespace Oop04
             Console.WriteLine($"Copied City: {deepcopy.Destination.City}");
             #endregion
 
+            #region Static Field
+            Console.WriteLine("--------------Total Shipments Created------------------");
+            Console.WriteLine(Shipment.TotalShipmentsCreated);
+            Shipment shipment5 = new StandardShipment("SH005", 10m, 50m, "TRACK002", new DeliveryAddress("City3", "Street3", 3));
+            Console.WriteLine(Shipment.TotalShipmentsCreated);
+
+            #endregion
+
             #endregion
         }
     }
