@@ -231,6 +231,14 @@ namespace Oop04
             #endregion
 
             #region task 5
+            DeliveryUtilities.PrintSeparator();
+            Console.WriteLine("Creating Shipments...");
+            DeliveryUtilities.PrintSeparator();
+
+            Console.WriteLine("Standard Shipment CreateD....");
+            Console.WriteLine("Express Shipment Created......");
+            Console.WriteLine("International Shipment Created...... \r\n");
+            Console.WriteLine($"Total Shipments Created : {Shipment.GetTotalShipmentsCreated()}");
 
             #region Object Copy
             DeliveryUtilities.PrintSeparator();
@@ -238,23 +246,21 @@ namespace Oop04
             DeliveryUtilities.PrintSeparator();
             Shipment shipment1 = new StandardShipment("SH001", 10m, 50m, "TRACK001", new DeliveryAddress("City1", "Street1", 1));
             Shipment shipment2 = shipment1;
-            Shipment shipment3 = shipment1.CopyShipment();
 
-            Console.WriteLine($"Shipment 1 HashCode: {shipment1.GetHashCode()}");
-            Console.WriteLine($"Shipment 2 HashCode: {shipment2.GetHashCode()}");
-            Console.WriteLine($"Shipment 3 HashCode: {shipment3.GetHashCode()}");
+            Console.WriteLine($"Original Shipment HashCode: {shipment1.GetHashCode()}");
+            Console.WriteLine($"Assigned Shipment HashCode: {shipment2.GetHashCode()}");
             // Shipment 1 and Shipment 2 have the same hash code (reference copy)
             // Shipment 3 has a different hash code (shallow copy)
+            Console.WriteLine("---------------------------------------------------------");
             #endregion
 
             #region ShallowCopy
-            //------------------------------------
-            //--------Before Modification---------
-            //------------------------------------
-            Console.WriteLine("Shallow Copy Before Modification:");
-            Console.WriteLine(shipment1.Description);
-            Console.WriteLine(shipment1.Destination.City);
-            Console.WriteLine(shipment1.Weight);
+            DeliveryUtilities.PrintSeparator();
+            Console.WriteLine("Shallow Copy");
+            DeliveryUtilities.PrintSeparator();
+
+            Console.WriteLine($"Original Shipment City: {shipment1.Destination.City}");
+            Console.WriteLine($"Copied Shipment City: {shipment1.Destination.City}\r\n");
 
             Shipment shallowShipment = shipment1.ShallowCopy();
 
@@ -264,28 +270,32 @@ namespace Oop04
             shallowShipment.Description = "SH004";
             shallowShipment.Weight = 20m;
             shallowShipment.Destination.City = "City2";
-            Console.WriteLine("Shallow Copy After Modification:");
-            Console.WriteLine(shipment1.Description);
-            Console.WriteLine(shipment1.Destination.City);
-            Console.WriteLine(shipment1.Weight);
 
-            Console.WriteLine(shallowShipment.Description);
-            Console.WriteLine(shallowShipment.Destination.City);
-            Console.WriteLine(shallowShipment.Weight);
+            Console.WriteLine("Shallow Copy After Modification: \r\n");
+            Console.WriteLine($"Original Shipment City: {shipment1.Destination.City}");
+            Console.WriteLine($"Shallow Copy City: {shallowShipment.Destination.City}");
+
+            Console.WriteLine("---------------------------------------------------------");
             #endregion
 
             #region Deep Copy
+            DeliveryUtilities.PrintSeparator();
+            Console.WriteLine("Deep Copy");
+            DeliveryUtilities.PrintSeparator();
+
             Shipment originalShipment = new StandardShipment("SH000", 30m, 90m, "TRACK001", new DeliveryAddress("Cairo", "Abbass", 1));
             Shipment deepcopy = originalShipment.DeepCopy();
             Console.WriteLine("Deep Copy Before Modification:");
             Console.WriteLine($"Original City: {originalShipment.Destination.City}");
-            Console.WriteLine($"Copied City: {deepcopy.Destination.City}");
+            Console.WriteLine($"Copied City: {deepcopy.Destination.City} \r\n");
 
             deepcopy.Destination.City = "Giza";
 
-            Console.WriteLine("Deep Copy After Modification:");
+            Console.WriteLine("Changing copied shipment address...\r\n");
             Console.WriteLine($"Original City: {originalShipment.Destination.City}");
-            Console.WriteLine($"Copied City: {deepcopy.Destination.City}");
+            Console.WriteLine($"Copied City: {deepcopy.Destination.City}\r\n");
+
+            Console.WriteLine($"Same DeliveryAddress Object : {ReferenceEquals(originalShipment.Destination, deepcopy.Destination)}");
             #endregion
 
             #region Static Field

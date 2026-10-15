@@ -116,10 +116,7 @@ public abstract partial class Shipment
     #endregion
 
     #region Methods' assignments 05
-    public Shipment CopyShipment()
-    {
-        return (Shipment)this.MemberwiseClone();
-    }
+    
     public Shipment ShallowCopy()
     {
         return (Shipment)this.MemberwiseClone();
